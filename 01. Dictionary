@@ -1,0 +1,78 @@
+using System;
+using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace FirstEx
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, List<string>> wordsDict = new Dictionary<string, List<string>>();
+            Dictionary<String, List<string>> sortedDict = new Dictionary<string, List<string>>();
+            List<string> sorted = new List<string>();
+            List<string> words = Console.ReadLine().Split(" | ").ToList();
+            for (int i = 0; i < words.Count; i++)
+            {
+                string currentString = words[i];
+                string[] tokens = currentString.Split(": ", StringSplitOptions.RemoveEmptyEntries);
+                string dictr = tokens[0];
+                if (!wordsDict.ContainsKey(dictr))
+                {
+                    wordsDict[dictr] = new List<string>();
+                    wordsDict[dictr].Add(tokens[1]);
+                }
+                else
+                {
+                    wordsDict[dictr].Add(tokens[1]);
+                }
+
+
+
+            }
+            List<string> names = Console.ReadLine().Split(" | ").ToList();
+            string commands = Console.ReadLine();
+            if (commands == "List")
+            {
+                foreach (var item in wordsDict.OrderBy(x => x.Key))
+                {
+                    string list = item.Key;
+                    Console.Write($"{list.TrimStart()} ");
+                }
+                Console.WriteLine();
+            }
+            else if (commands == "End")
+            {
+                for (int i = 0; i < names.Count; i++)
+                {
+                    string currentName = names[i];
+                    if (wordsDict.ContainsKey(currentName))
+                    {
+                        sorted.Add(currentName);
+                    }
+                }
+                sorted.Sort();
+
+                foreach (var item in wordsDict.OrderBy(x => x.Key))
+                {  
+                    string firstWord = item.Key;
+                    if (sorted.Contains(firstWord))
+                    {
+                        Console.WriteLine(firstWord);
+                        foreach (var items in wordsDict[firstWord].OrderByDescending(x => x.Length))
+                        {
+                            Console.WriteLine($" -{items}");
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+
+                }
+            }
+        }
+    }
+}
