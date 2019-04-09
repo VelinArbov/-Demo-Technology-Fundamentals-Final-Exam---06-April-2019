@@ -1,0 +1,40 @@
+using System;
+using System.Text;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+namespace secondEx
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string input = Console.ReadLine();
+            string[] Keys = Console.ReadLine().Split().ToArray();
+            string firstWord = Keys[0];
+            string secondWord = Keys[1];
+            var patternValidBook = @"^[d-z\{\}\|\#]+$";
+            string newstring = string.Empty;
+            Match validbook = Regex.Match(input, patternValidBook);
+            if (validbook.Length <= 0)
+            {
+                Console.WriteLine("This is not the book you are looking for.");
+            }
+            else
+            {
+                for (int i = 0; i < input.Length; i++)
+                {
+                    char currentchar = input[i];
+                   int newcurrentchar =(int)currentchar - 3;
+                    char newchar = (char)(newcurrentchar);
+                    newstring += newchar;
+
+
+                }
+            }
+            string substring = newstring.Replace(firstWord, secondWord);
+            Console.WriteLine(substring);
+        }
+    }
+}
